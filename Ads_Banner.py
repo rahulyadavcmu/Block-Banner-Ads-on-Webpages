@@ -1,9 +1,10 @@
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
+# from sklearn.tree import DecisionTreeClassifier
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics.metrics import classification_report
 from sklearn.pipeline import Pipeline
 from sklearn.grid_search import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
 
 if __name__ == '__main__':
 	
@@ -29,11 +30,14 @@ if __name__ == '__main__':
 
 	#Create a pipeline and an instance of DecisionTreeClassifier for grid search.
 	#Set 'criterion' to 'entropy' to build the tree using the information gain heuristic.
-	pipeline = Pipeline([('clf', DecisionTreeClassifier(criterion='entropy'))])
+	# pipeline = Pipeline([('clf', DecisionTreeClassifier(criterion='entropy'))])
+	#Replace Decision Tree with Random Forest
+	pipeline = Pipeline([('clf', RandomForestClassifier(criterion='entropy'))])
 
 	#Specify the hyperparameter space for grid search
 	parameters = {
-	'clf__max_depth' : (150, 155, 160),
+	'clf__n_estimators' : (5, 10, 20, 50),
+	'clf__max_depth' : (50, 150, 250),
 	'clf__min_samples_split' : (1, 2, 3),
 	'clf__min_samples_leaf' : (1, 2, 3)
 	}
